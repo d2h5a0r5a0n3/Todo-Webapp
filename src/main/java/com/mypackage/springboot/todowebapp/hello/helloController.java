@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class helloController {
 
-    @RequestMapping("/hello")
+    @RequestMapping("/todowebapp/hello")
     @ResponseBody
     public String sayHello() {
         return "Hello World";
     }
 
-    @RequestMapping("/hello-html")
+    @RequestMapping("/todowebapp/hello-html")
     @ResponseBody
     public String sayHelloHtml() {
         StringBuilder sb = new StringBuilder();
@@ -24,7 +24,7 @@ public class helloController {
         return sb.toString();
     }
 
-    @RequestMapping("/hello-jsp") 
+    @RequestMapping("/todowebapp/hello-jsp") 
     public String sayHelloJSP() {
         return "sayHello";
     }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @RequestMapping("list-todos")
+    @RequestMapping("/todowebapp/list-todos")
     public String listAllTodos(Model model) {
         String username=getLoggedUsername();
         List<Todo> todos = todoService.findByUsername(username);
@@ -34,7 +33,7 @@ public class TodoController {
         return "listTodos";
     }
 
-    @GetMapping("add-todo")
+    @GetMapping("/todowebapp/add-todo")
     public String showNewTodoPage(Model model) {
         String username = getLoggedUsername();
         Todo todo = new Todo(0, username, "",LocalDate.now().plusDays(1), false);
@@ -42,30 +41,30 @@ public class TodoController {
         return "todo";
     }
 
-    @PostMapping("add-todo")
+    @PostMapping("/todowebapp/add-todo")
     public String addNewTodo(Model model, @Valid Todo todo, BindingResult result) {
         if (result.hasErrors()) {
             return "todo";
         }
         String username = getLoggedUsername();
         todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
-    @GetMapping("delete-todo")
+    @GetMapping("/todowebapp/delete-todo")
     public String deleteTodo(@RequestParam int id) {
         todoService.deleteById(id);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
-    @GetMapping("update-todo")
+    @GetMapping("/todowebapp/update-todo")
     public String showUpdateTodoPage(@RequestParam int id, Model model) {
         Todo todo=todoService.findById(id);
         model.addAttribute("todo",todo);
         return "todo";
     }
 
-    @PostMapping("update-todo")
+    @PostMapping("/todowebapp/update-todo")
     public String updateTodo(Model model, @Valid Todo todo, BindingResult result) {
         if (result.hasErrors()) {
             return "todo";
@@ -73,7 +72,7 @@ public class TodoController {
         String username = getLoggedUsername();
         todo.setUsername(username);
         todoService.updateTodo(todo);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
     private String getLoggedUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

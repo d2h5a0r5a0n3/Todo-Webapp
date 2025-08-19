@@ -5,5 +5,5 @@ com\mypackage\springboot\todowebapp\todo\TodoController.class
 com\mypackage\springboot\todowebapp\TodowebappApplication.class
 com\mypackage\springboot\todowebapp\security\SpringSecurityConfiguration.class
 com\mypackage\springboot\todowebapp\todo\TodoControllerJPA.class
-com\mypackage\springboot\todowebapp\login\WelcomwController.class
+com\mypackage\springboot\todowebapp\login\WelcomeController.class
 com\mypackage\springboot\todowebapp\hello\helloController.class

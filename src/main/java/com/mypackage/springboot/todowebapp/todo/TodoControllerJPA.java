@@ -24,7 +24,7 @@ public class TodoControllerJPA {
     @Autowired
     private TodoRepository todoRepository;
 
-    @RequestMapping("list-todos")
+    @RequestMapping("/todowebapp/list-todos")
     public String listAllTodos(Model model) {
         String username = getLoggedUsername();
         List<Todo> todos = todoRepository.findByUsername(username);
@@ -32,7 +32,7 @@ public class TodoControllerJPA {
         return "listTodos";
     }
 
-    @GetMapping("add-todo")
+    @GetMapping("/todowebapp/add-todo")
     public String showNewTodoPage(Model model) {
         String username = getLoggedUsername();
         Todo todo = new Todo(0, username, "", LocalDate.now().plusDays(1), false);
@@ -40,7 +40,7 @@ public class TodoControllerJPA {
         return "todo";
     }
 
-    @PostMapping("add-todo")
+    @PostMapping("/todowebapp/add-todo")
     public String addNewTodo(Model model, @Valid Todo todo, BindingResult result) {
         if (result.hasErrors()) {
             return "todo";
@@ -48,23 +48,23 @@ public class TodoControllerJPA {
         String username = getLoggedUsername();
         todo.setUsername(username);
         todoRepository.save(todo);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
-    @GetMapping("delete-todo")
+    @GetMapping("/todowebapp/delete-todo")
     public String deleteTodo(@RequestParam int id) {
         todoRepository.deleteById(id);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
-    @GetMapping("update-todo")
+    @GetMapping("/todowebapp/update-todo")
     public String showUpdateTodoPage(@RequestParam int id, Model model) {
         Todo todo = todoRepository.findById(id).get();
         model.addAttribute("todo", todo);
         return "todo";
     }
 
-    @PostMapping("update-todo")
+    @PostMapping("/todowebapp/update-todo")
     public String updateTodo(Model model, @Valid Todo todo, BindingResult result) {
         if (result.hasErrors()) {
             return "todo";
@@ -72,7 +72,7 @@ public class TodoControllerJPA {
         String username = getLoggedUsername();
         todo.setUsername(username);
         todoRepository.save(todo);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
     private String getLoggedUsername() {
@@ -80,7 +80,7 @@ public class TodoControllerJPA {
         return authentication.getName();
     }
 
-    @GetMapping("status-todo")
+    @GetMapping("/todowebapp/status-todo")
     public String changetoDome(@RequestParam int id) {
         Todo todo = todoRepository.findById(id).get();
         if (todo.isDone()) {
@@ -91,7 +91,7 @@ public class TodoControllerJPA {
 
         }
         todoRepository.save(todo);
-        return "redirect:/list-todos";
+        return "redirect:/todowebapp/list-todos";
     }
 
 }
